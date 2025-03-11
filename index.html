@@ -14,8 +14,9 @@
 			
         body {
 	   /*display: flex;*/
-	    justify-content: center; /* Centraliza horizontalmente */
-	
+	    /*justify-content: center; /* Centraliza horizontalmente */
+	    align-items: center; /* Centraliza verticalmente */
+		
             /* URL da imagem */
             background-image: url('https://i.imgur.com/IFVo4Gr.png');
             
@@ -64,11 +65,15 @@
     </style>
 </head>
 <body>
-    <h2>Wedding Day</h2>
-    <button id="start">🎤 Iniciar áudio</button>
-    <button id="stop" disabled>⏹️ Parar áudio</button>
+    <h2>Deixa a tua mensagem de amor!</h2>
+	<p></p>
+	<h4>Um casamento é feito de momentos e emoções. Regista a tua mensagem e eterniza este dia especial!</h4>
+	<p></p>
+    <button id="start">Gravar áudio</button>
+    <button id="stop" disabled>Parar áudio</button>
     <audio id="audioPlayer" controls></audio>
-    <button id="upload" disabled> Enviar ✅</button>
+	<p></p>
+    <button id="upload" disabled> Enviar</button>
 
     <script>
         let mediaRecorder;
