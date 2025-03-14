@@ -44,22 +44,35 @@
             margin-top: 20px;
             margin-bottom: 20px;
             font-family: "Snell Roundhand", cursive; /* Define a nova fonte */
-            color: white /*#7e9a7b*7;
+            color: white /*#7e9a7b7*/;
         }
 
-        button {
+       button {
             padding: 10px 20px;
             font-size: 14px;
+            font-weight: bold;
             margin: 10px;
             cursor: pointer;
             border: none;
             border-radius: 5px;
-            background-color: #e2e8e2;
+            background-color: #e2e8e2; /* Verde mais forte */
             color: #3b5110;
+            transition: background 0.3s, transform 0.2s;
         }
-
+        
+        button:hover {
+            background-color: #45a049; /* Um tom mais escuro ao passar o mouse */
+            transform: scale(1.05);
+        }
+        
+        button:active {
+            background-color: #a6bfa6;
+            transform: scale(0.95);
+        }
+        
         button:disabled {
-            background-color: #e2e8e2;
+            background-color: #e2e8e2; /* Cinza para indicar que está desativado */
+            color: white;
             cursor: not-allowed;
         }
     </style>
