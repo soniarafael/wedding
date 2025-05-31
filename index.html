@@ -13,8 +13,7 @@
 
         html, body {
             height: 100%;
-            margin: 0;
-            padding: 0;
+            overflow: hidden;
         }
 
         body {
@@ -23,69 +22,70 @@
             background-position: center center;
             background-attachment: fixed;
             background-repeat: no-repeat;
-            height: 100%;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            text-align: center;
-            color: #8FBC8F;
             font-family: Arial, sans-serif;
+            color: #8FBC8F;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
         }
 
         h3 {
-            margin-top: 33vh; /* Adiciona espaçamento do topo */
-            font-family: "Snell Roundhand", cursive; /* Define a nova fonte */
-            font-size: 20px; /* Ajusta o tamanho da fonte */
-            color: white /*#627951*/;
+            font-family: "Snell Roundhand", cursive;
+            font-size: 20px;
+            color: white;
+            margin-bottom: 10px;
         }
 
         h5 {
-            margin-top: 20px;
+            font-family: "Snell Roundhand", cursive;
+            color: white;
             margin-bottom: 20px;
-            font-family: "Snell Roundhand", cursive; /* Define a nova fonte */
-            color: white /*#7e9a7b7*/;
         }
 
-       button {
+        button {
             padding: 10px 20px;
             font-size: 14px;
             margin: 10px;
             cursor: pointer;
             border: none;
             border-radius: 5px;
-            background-color: #e2e8e2; /* Verde mais forte */
+            background-color: #e2e8e2;
             color: #3b5110;
             transition: background 0.3s, transform 0.2s;
         }
-        
+
         button:disabled {
-            background-color: #e2e8e2; /* Cinza para indicar que está desativado */
+            background-color: #e2e8e2;
             color: #3b5110;
             cursor: not-allowed;
+        }
+
+        audio {
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-    
+
     <h3>Deixa a tua mensagem de amor!</h3>
-    <p></p>
     <h5>Um casamento é feito de momentos e emoções. Regista a tua mensagem e eterniza este dia especial!</h5>
-    <p></p>
+
     <button id="start">Gravar áudio</button>
     <button id="stop" disabled>Parar áudio</button>
     <audio id="audioPlayer" controls></audio>
-    <p></p>
     <button id="upload" disabled>Enviar</button>
 
     <script>
         let mediaRecorder;
         let audioChunks = [];
-        const uploadUrl = "https://script.google.com/macros/s/AKfycbxeSK0bdYCJg4kDoFLlSG_xSYcISeEhZ3Yjb8XkkRj9uSlWPOF0XRuX3fuMMfdvVBlS7Q/exec"; 
-        
+        const uploadUrl = "https://script.google.com/macros/s/AKfycbxeSK0bdYCJg4kDoFLlSG_xSYcISeEhZ3Yjb8XkkRj9uSlWPOF0XRuX3fuMMfdvVBlS7Q/exec";
+
         document.getElementById('start').addEventListener('click', async () => {
             let stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             mediaRecorder = new MediaRecorder(stream);
+            audioChunks = [];
             mediaRecorder.start();
 
             mediaRecorder.ondataavailable = event => audioChunks.push(event.data);
@@ -100,18 +100,18 @@
             document.getElementById('stop').disabled = false;
             document.getElementById('start').disabled = true;
         });
-        
+
         document.getElementById('stop').addEventListener('click', () => {
             mediaRecorder.stop();
             document.getElementById('stop').disabled = true;
         });
-        
+
         document.getElementById('upload').addEventListener('click', async () => {
             const reader = new FileReader();
             reader.readAsDataURL(new Blob(audioChunks, { type: 'audio/wav' }));
 
             reader.onloadend = async () => {
-                const base64Audio = reader.result.split(',')[1]; 
+                const base64Audio = reader.result.split(',')[1];
 
                 await fetch(uploadUrl, {
                     method: 'POST',
