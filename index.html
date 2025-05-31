@@ -1,127 +1,180 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gravação de Áudio</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gravação de Áudio</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        html, body {
-            height: 100%;
-            overflow: hidden;
-        }
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
 
-        body {
-            background-image: url('https://i.imgur.com/XFFoblA.jpeg');
-            background-size: cover;
-            background-position: center center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-            font-family: Arial, sans-serif;
-            color: #8FBC8F;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
+    body {
+      background-image: url('https://i.imgur.com/XFFoblA.jpeg');
+      background-size: cover;
+      background-position: center center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      font-family: Arial, sans-serif;
+      color: #8FBC8F;
+      text-align: center;
+      position: relative;
+    }
 
-        h3 {
-            font-family: "Snell Roundhand", cursive;
-            font-size: 20px;
-            color: white;
-            margin-bottom: 10px;
-        }
+    .top-info {
+      position: absolute;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
 
-        h5 {
-            font-family: "Snell Roundhand", cursive;
-            color: white;
-            margin-bottom: 20px;
-        }
+    h5 {
+      font-family: 'Snell Roundhand', cursive;
+      color: white;
+      font-size: 20px;
+      margin: 0;
+    }
 
-        button {
-            padding: 10px 20px;
-            font-size: 14px;
-            margin: 10px;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            background-color: #e2e8e2;
-            color: #3b5110;
-            transition: background 0.3s, transform 0.2s;
-        }
+    h5:first-of-type {
+      font-size: 28px;
+    }
 
-        button:disabled {
-            background-color: #e2e8e2;
-            color: #3b5110;
-            cursor: not-allowed;
-        }
+    .middle-text {
+      position: absolute;
+      top: 400px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      padding: 0 15px;
+      box-sizing: border-box;
+      text-align: center;
+    }
 
-        audio {
-            margin-top: 10px;
-        }
-    </style>
+    .middle-text h5 {
+      font-size: 18px;
+      line-height: 1.4;
+      color: white;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .buttons {
+      position: absolute;
+      top: 440px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .inline-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+      background-color: rgba(255, 255, 255, 0.6);
+      color: #3b5110;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn:disabled {
+      background-color: rgba(255, 255, 255, 0.4);
+      color: #3b5110;
+      cursor: not-allowed;
+    }
+
+    .btn:hover:not(:disabled) {
+      background-color: rgba(255, 255, 255, 0.9);
+    }
+
+    audio {
+      margin-top: 10px;
+      width: 250px;
+    }
+  </style>
 </head>
 <body>
+  <div class="top-info">
+    <h5>Sónia & Rafael</h5>
+    <h5>09.06.2025</h5>
+  </div>
 
-    <h3>Deixa a tua mensagem de amor!</h3>
-    <h5>Um casamento é feito de momentos e emoções. Regista a tua mensagem e eterniza este dia especial!</h5>
+  <div class="middle-text">
+    <h5>Deixa a tua mensagem de amor! 🎤</h5>
+  </div>
 
-    <button id="start">Gravar áudio</button>
-    <button id="stop" disabled>Parar áudio</button>
+  <div class="buttons">
+    <div class="inline-buttons">
+      <button class="btn" id="start">Gravar áudio</button>
+      <button class="btn" id="stop" disabled>Parar áudio</button>
+    </div>
     <audio id="audioPlayer" controls></audio>
-    <button id="upload" disabled>Enviar</button>
+    <button class="btn" id="upload" disabled>Enviar</button>
+  </div>
 
-    <script>
-        let mediaRecorder;
-        let audioChunks = [];
-        const uploadUrl = "https://script.google.com/macros/s/AKfycbxeSK0bdYCJg4kDoFLlSG_xSYcISeEhZ3Yjb8XkkRj9uSlWPOF0XRuX3fuMMfdvVBlS7Q/exec";
+  <script>
+    let mediaRecorder;
+    let audioChunks = [];
+    const uploadUrl = "https://script.google.com/macros/s/AKfycbxeSK0bdYCJg4kDoFLlSG_xSYcISeEhZ3Yjb8XkkRj9uSlWPOF0XRuX3fuMMfdvVBlS7Q/exec";
 
-        document.getElementById('start').addEventListener('click', async () => {
-            let stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            mediaRecorder = new MediaRecorder(stream);
-            audioChunks = [];
-            mediaRecorder.start();
+    document.getElementById('start').addEventListener('click', async () => {
+      let stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorder = new MediaRecorder(stream);
+      audioChunks = [];
+      mediaRecorder.start();
 
-            mediaRecorder.ondataavailable = event => audioChunks.push(event.data);
+      mediaRecorder.ondataavailable = event => audioChunks.push(event.data);
 
-            mediaRecorder.onstop = async () => {
-                const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-                const audioUrl = URL.createObjectURL(audioBlob);
-                document.getElementById('audioPlayer').src = audioUrl;
-                document.getElementById('upload').disabled = false;
-            };
+      mediaRecorder.onstop = async () => {
+        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+        document.getElementById('audioPlayer').src = audioUrl;
+        document.getElementById('upload').disabled = false;
+      };
 
-            document.getElementById('stop').disabled = false;
-            document.getElementById('start').disabled = true;
+      document.getElementById('stop').disabled = false;
+      document.getElementById('start').disabled = true;
+    });
+
+    document.getElementById('stop').addEventListener('click', () => {
+      mediaRecorder.stop();
+      document.getElementById('stop').disabled = true;
+    });
+
+    document.getElementById('upload').addEventListener('click', async () => {
+      const reader = new FileReader();
+      reader.readAsDataURL(new Blob(audioChunks, { type: 'audio/wav' }));
+
+      reader.onloadend = async () => {
+        const base64Audio = reader.result.split(',')[1];
+
+        await fetch(uploadUrl, {
+          method: 'POST',
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams({ "audio": base64Audio })
         });
 
-        document.getElementById('stop').addEventListener('click', () => {
-            mediaRecorder.stop();
-            document.getElementById('stop').disabled = true;
-        });
-
-        document.getElementById('upload').addEventListener('click', async () => {
-            const reader = new FileReader();
-            reader.readAsDataURL(new Blob(audioChunks, { type: 'audio/wav' }));
-
-            reader.onloadend = async () => {
-                const base64Audio = reader.result.split(',')[1];
-
-                await fetch(uploadUrl, {
-                    method: 'POST',
-                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                    body: new URLSearchParams({ "audio": base64Audio })
-                });
-
-                alert('Áudio enviado com sucesso!');
-            };
-        });
-    </script>
+        alert('Áudio enviado com sucesso!');
+      };
+    });
+  </script>
 </body>
 </html>
